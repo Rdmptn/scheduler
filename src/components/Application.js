@@ -1,28 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import "components/Application.scss";
 import DayList from "components/DayList.js";
+import Appointment from "components/Appointment/index.js";
 
-const days = [
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2,
+    time: "12pm",
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 3,
-    name: "Wednesday",
-    spots: 0,
+    time: "2pm",
+    interview: {
+      student: "Yo",
+      interviewer: {
+        id: 2,
+        name: "Interview Man",
+        avatar: "https://i.imgur.com/twYrpay.jpg"
+      }
+    }
   },
+  {
+    id: 4,
+    time: "3pm"
+  },
+  {
+    id: 5,
+    time: "4pm",
+    interview: {
+      student: "Student person",
+      interviewer: {
+        id: 3,
+        name: "Interviewer Person",
+        avatar: "https://i.imgur.com/Nmx0Qxo.png"
+      }
+    }
+  }
 ];
+
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([]);
+  
+  useEffect(() => {
+    const dayApiUrl = "/api/days";
+    axios.get(dayApiUrl).then(response => {
+      setDays(response.data);
+    });
+  }, [days])
+  
+  
+  const displayAppointments = appointments.map((appointments, index) => {
+    return <Appointment key={appointments.id} {...appointments} />
+  })
   
   return (
     <main className="layout">
@@ -47,7 +92,10 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        <ul>
+          {displayAppointments}
+          <Appointment key="last" time="5pm" />
+        </ul>
       </section>
     </main>
   );
