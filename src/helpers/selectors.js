@@ -25,3 +25,17 @@ export function getInterview(state, interview) {
   
   return interviewObject;
 }
+
+export function getInterviewersForDay(state, day) {
+  let interviewersForDay = [];
+  for (let obj of state.days) {
+    if (obj.name === day) {
+      let interviewers = obj.interviewers;
+      for (let interviewer of interviewers) {
+        interviewersForDay.push(state.interviewers[interviewer]);
+        continue;
+      }
+    }
+  }
+  return interviewersForDay;
+}
