@@ -31,7 +31,7 @@ export default function Form(props) {
             placeholder={"Please enter your name."}
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} value={interviewer} setInterviewer={(event) => setInterviewer(event.target.alt)} />
+        <InterviewerList interviewers={props.interviewers} value={interviewer} setInterviewer={(event) => setInterviewer(Number(event.target.alt))} />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
