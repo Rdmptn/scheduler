@@ -31,12 +31,12 @@ export default function Form(props) {
             placeholder={"Please enter your name."}
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} value={interviewer} setInterviewer={action("setInterviewer")} onChange={(event) => setInterviewer(event.target.value)} />
+        <InterviewerList interviewers={props.interviewers} value={interviewer} setInterviewer={(event) => setInterviewer(event.target.alt)} />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={props.onCancel}>Cancel</Button>
-          <Button confirm onClick={props.onSave}>Save</Button>
+          <Button confirm onClick={() => props.onSave(name, interviewer)}>Save</Button>
         </section>
       </section>
     </main>
