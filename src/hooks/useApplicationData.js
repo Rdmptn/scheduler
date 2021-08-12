@@ -10,6 +10,7 @@ export default function useApplicationData(initial) {
     interviewers: {}
   });
   
+  
   const setDay = day => setState({ ...state, day });
   
   useEffect(() => {
@@ -22,29 +23,77 @@ export default function useApplicationData(initial) {
       })
   }, []) 
   
+  const getDayId = function(today, days) {
+    let dayId;  
+    for (let day of days) {
+      if (day.name === today) {
+        dayId = day.id - 1;
+      }
+    }
+    return dayId;
+  }
+  
+  const updateSpots = function (dayId, days, appointments) {
+    let nullCount = 0;
+    let appointmentsForDay = days[dayId].appointments;
+    for (let appointment of appointmentsForDay) {
+      if (appointments[appointment].interview === null) {
+        nullCount++;
+      }
+    }
+    return nullCount;
+  }
   
   const bookInterview = function(id, interview) {
+    
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
+   
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-
+    
+    let dayId = getDayId(state.day, state.days);
+    
     return axios.put(`/api/appointments/${id}`, {interview})
-    .then(() => {
-      setState({
-        ...state,
-        appointments
-      });
+      .then(() => {
+        state.appointments[id].interview = { interview }
+        let spots = updateSpots(dayId, state.days, state.appointments);
+        state.days[dayId].spots = spots;
+        setState({
+          ...state,
+          appointments
+        })
     });
+  
   }
   
   const cancelInterview = function(id) {
+    
+    let dayId = getDayId(state.day, state.days);
+    
     return axios.delete(`/api/appointments/${id}`)
+      .then(() => {
+        state.appointments[id].interview = null;
+        let spots = updateSpots(dayId, state.days, state.appointments);
+        state.days[dayId].spots = spots;
+        setState({
+          ...state
+        })
+      });
+    
   }
   
   return { state, setDay, bookInterview, cancelInterview };
 }
+
+
+      
+      
+      
+      
+      
+      
