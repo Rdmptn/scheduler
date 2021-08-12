@@ -14,10 +14,10 @@ Run the development server and api server using `npm start` from the respective 
 
 ## Screenshots
 
-!["Desktop View"]()
+!["Desktop View"](https://github.com/Rdmptn/scheduler/blob/master/docs/desktop-view.png?raw=true)
 Desktop layout displaying interviews for Monday with an appointment hovered to show edit/delete buttons.
 
-!["Mobile View"]() 
+!["Mobile View"](https://github.com/Rdmptn/scheduler/blob/master/docs/mobile-view.png?raw=true) 
 Mobile layout displaying interviews for Monday, including form for editing/creating interviews.
 
 
