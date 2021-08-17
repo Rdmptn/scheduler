@@ -1,9 +1,7 @@
 import React from "react";
-// import classnames from "classnames";
 import PropTypes from 'prop-types';
 
 import "components/InterviewerList.scss";
-
 import InterviewerListItem from "components/InterviewerListItem";
 
 InterviewerList.propTypes = {
@@ -11,7 +9,6 @@ InterviewerList.propTypes = {
   };
 
 export default function InterviewerList(props) {
-  
   
   const interviewerData = props.interviewers;
   
